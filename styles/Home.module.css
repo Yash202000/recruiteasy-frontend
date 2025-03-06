@@ -1,0 +1,54 @@
+.main {
+  position: relative;
+  display: ruby;
+  gap: 1rem;
+  justify-content: center;
+  place-content: center;
+  justify-items: center;
+  overflow: auto;
+  flex-grow: 1;
+  padding: 1rem; /* Add padding for better spacing on all screens */
+}
+
+.tabContainer {
+  width: 100%;
+  max-width: 100%;; /* Increased max-width for better layout on larger screens */
+  padding-inline: 1rem; /* Adjusted padding for more balance */
+  margin: 0 auto; /* Center the content horizontally */
+}
+
+.tabSelect {
+  display: flex;
+  justify-content: stretch;
+  gap: 0.125rem;
+  padding: 0.25rem; /* Slightly increased padding for better usability */
+  margin: 0 auto 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Adjusted border color for better visibility */
+  border-radius: 0.5rem;
+  background-color: #181515; /* Add a subtle background color */
+}
+
+.tabSelect > * {
+  width: 100%;
+  font-size: 1rem; /* Uniform font size for tabs */
+}
+
+.tabContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Increased gap for better spacing between elements */
+  padding: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Adjusted border color for better contrast */
+  border-radius: 0.5rem;
+  background-color: #1b1a1a; /* White background for better readability */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow for elevation */
+}
+
+@media (max-width: 768px) {
+  .tabContainer {
+    max-width: 100%; /* Make full width on smaller screens */
+  }
+  .tabContent {
+    padding: 1rem; /* Adjust padding for smaller screens */
+  }
+}
