@@ -3,9 +3,9 @@ import { ConnectionDetails } from '@/lib/types';
 import { AccessToken, AccessTokenOptions, VideoGrant } from 'livekit-server-sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
-const API_KEY = process.env.LIVEKIT_API_KEY;
-const API_SECRET = process.env.LIVEKIT_API_SECRET;
-const LIVEKIT_URL = process.env.LIVEKIT_URL;
+const API_KEY = process.env.RECRUITEASY_API_KEY;
+const API_SECRET = process.env.RECRUITEASY_API_SECRET;
+const RECRUITEASY_URL = process.env.RECRUITEASY_URL;
 
 export async function GET(request: NextRequest) {
   try {
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     const participantName = request.nextUrl.searchParams.get('participantName');
     const metadata = request.nextUrl.searchParams.get('metadata') ?? '';
     const region = request.nextUrl.searchParams.get('region');
-    const livekitServerUrl = region ? getLiveKitURL(region) : LIVEKIT_URL;
+    const livekitServerUrl = region ? getLiveKitURL(region) : RECRUITEASY_URL;
     if (livekitServerUrl === undefined) {
       throw new Error('Invalid region');
     }
@@ -66,12 +66,12 @@ function createParticipantToken(userInfo: AccessTokenOptions, roomName: string) 
 }
 
 /**
- * Get the LiveKit server URL for the given region.
+ * Get the RecruitEasy server URL for the given region.
  */
 function getLiveKitURL(region: string | null): string {
-  let targetKey = 'LIVEKIT_URL';
+  let targetKey = 'RECRUITEASY_URL';
   if (region) {
-    targetKey = `LIVEKIT_URL_${region}`.toUpperCase();
+    targetKey = `RECRUITEASY_URL_${region}`.toUpperCase();
   }
   const url = process.env[targetKey];
   if (!url) {

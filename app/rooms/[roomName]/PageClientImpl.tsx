@@ -55,6 +55,7 @@ export function PageClientImpl(props: {
     undefined,
   );
 
+  const { BACKEND_URI } = process.env;
 
 
 
@@ -65,7 +66,7 @@ export function PageClientImpl(props: {
     try {
 
 
-      const response = await axios.post("http://localhost:8000/calls/getToken",{
+      const response = await axios.post(`${BACKEND_URI}/calls/getToken`,{
         identity: "1",
         name: "Yash Panchwatkar",
         room: props.roomName,

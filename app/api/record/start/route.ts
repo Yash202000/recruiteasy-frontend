@@ -17,9 +17,9 @@ export async function GET(req: NextRequest) {
     }
 
     const {
-      LIVEKIT_API_KEY,
-      LIVEKIT_API_SECRET,
-      LIVEKIT_URL,
+      RECRUITEASY_API_KEY,
+      RECRUITEASY_API_SECRET,
+      RECRUITEASY_URL,
       S3_KEY_ID,
       S3_KEY_SECRET,
       S3_BUCKET,
@@ -27,10 +27,10 @@ export async function GET(req: NextRequest) {
       S3_REGION,
     } = process.env;
 
-    const hostURL = new URL(LIVEKIT_URL!);
+    const hostURL = new URL(RECRUITEASY_URL!);
     hostURL.protocol = 'https:';
 
-    const egressClient = new EgressClient(hostURL.origin, LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
+    const egressClient = new EgressClient(hostURL.origin, RECRUITEASY_API_KEY, RECRUITEASY_API_SECRET);
 
     const existingEgresses = await egressClient.listEgress({ roomName });
     if (existingEgresses.length > 0 && existingEgresses.some((e) => e.status < 2)) {

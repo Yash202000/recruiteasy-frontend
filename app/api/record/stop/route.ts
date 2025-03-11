@@ -16,12 +16,12 @@ export async function GET(req: NextRequest) {
       return new NextResponse('Missing roomName parameter', { status: 403 });
     }
 
-    const { LIVEKIT_API_KEY, LIVEKIT_API_SECRET, LIVEKIT_URL } = process.env;
+    const { RECRUITEASY_API_KEY, RECRUITEASY_API_SECRET, RECRUITEASY_URL } = process.env;
 
-    const hostURL = new URL(LIVEKIT_URL!);
+    const hostURL = new URL(RECRUITEASY_URL!);
     hostURL.protocol = 'https:';
 
-    const egressClient = new EgressClient(hostURL.origin, LIVEKIT_API_KEY, LIVEKIT_API_SECRET);
+    const egressClient = new EgressClient(hostURL.origin, RECRUITEASY_API_KEY, RECRUITEASY_API_SECRET);
     const activeEgresses = (await egressClient.listEgress({ roomName })).filter(
       (info) => info.status < 2,
     );

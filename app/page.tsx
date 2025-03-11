@@ -6,6 +6,9 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { encodePassphrase, generateRoomId, randomString } from '@/lib/client-utils';
 import styles from '../styles/Home.module.css';
 
+const BACKEND_URI = process.env.BACKEND_URI !== undefined ? process.env.BACKEND_URI : "http://localhost:8000";
+
+
 function Tabs(props: React.PropsWithChildren<{}>) {
   const searchParams = useSearchParams();
   const tempSearchParams = searchParams?.get('tab');
@@ -76,7 +79,10 @@ function DemoMeetingTab(props: { label: string }) {
   useEffect(() => {
     async function fetchRecentRooms() {
       try {
-        const response = await axios.get("http://localhost:8000/calls/?user_id=1", {
+        console.log("Inside page.tsx ",BACKEND_URI)
+
+        console.log(`${BACKEND_URI}/calls/?user_id=1`)
+        const response = await axios.get(`${BACKEND_URI}/calls/?user_id=1`, {
           headers: { accept: "application/json" },
         });
         setRecentRooms(response.data);
@@ -230,13 +236,13 @@ function CustomConnectionTab(props: { label: string }) {
   return (
     <form className={styles.tabContent} onSubmit={onSubmit}>
       <p style={{ marginTop: 0 }}>
-        Connect LiveKit Meet with a custom server using LiveKit Cloud or LiveKit Server.
+        Connect RecruitEasy Meet with a custom server using RecruitEasy Cloud or RecruitEasy Server.
       </p>
       <input
         id="serverUrl"
         name="serverUrl"
         type="url"
-        placeholder="LiveKit Server URL: wss://*.livekit.cloud"
+        placeholder="RecruitEasy Server URL: wss://*.recruiteasy.com"
         required
       />
       <textarea
@@ -296,7 +302,7 @@ function ProfileTab(props: { label: string }){
     // Fetch profile details
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/profiles/${profileId}`);
+        const response = await axios.get(`${BACKEND_URI}/profiles/${profileId}`);
         setProfile(response.data);
         setLoading(false);
       } catch (err) {
@@ -323,7 +329,7 @@ function ProfileTab(props: { label: string }){
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8000/profiles/${profileId}`, profile);
+      await axios.put(`${BACKEND_URI}/profiles/${profileId}`, profile);
       alert('Profile updated successfully!');
     } catch (err) {
       alert('Failed to update profile.');

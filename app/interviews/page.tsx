@@ -6,6 +6,7 @@ import { encodePassphrase, generateRoomId, randomString } from '@/lib/client-uti
 
 
 export default function InterviewsPage() {
+  const { BACKEND_URI } = process.env;
 
   const router = useRouter();
 
@@ -21,7 +22,7 @@ export default function InterviewsPage() {
   
     try {
       // Send POST request to FastAPI
-      const response = await axios.post("http://localhost:8000/calls/interviews", requestData);
+      const response = await axios.post(`${BACKEND_URI}/calls/interviews`, requestData);
   
       if (response.status === 200 || response.status === 201) {
         console.log("Interview request saved successfully:", response.data);

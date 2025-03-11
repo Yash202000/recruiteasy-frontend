@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 
 export default function Page({ params }: { params: { roomId: string } }) {
+  const { BACKEND_URI } = process.env;
+
   const [roomData, setRoomData] = useState<any>(null);
   const [logContent, setLogContent] = useState<string>('');
   const [feedbackData, setFeedbackData] = useState<any[]>([]);
@@ -9,9 +11,11 @@ export default function Page({ params }: { params: { roomId: string } }) {
   useEffect(() => {
     async function fetchRoomData() {
       try {
-        const response = await fetch(`http://localhost:8000/calls/${params.roomId}`);
+        const response = await fetch(`${BACKEND_URI}/calls/${params.roomId}`);
         const data = await response.json();
         setRoomData(data);
+
+        console.log("call data", data)
 
         // Find the .log file and fetch its content
         const logFile = data.files.find((file: any) => file.file_name.endsWith('.log'));
@@ -21,7 +25,7 @@ export default function Page({ params }: { params: { roomId: string } }) {
           setLogContent(logText);
 
           // Fetch the analysis for the log
-          const analysisResponse = await fetch(`http://localhost:8000/calls/${params.roomId}/analyze-log`, {
+          const analysisResponse = await fetch(`${BACKEND_URI}/calls/${params.roomId}/analyze-log`, {
             headers: { accept: 'application/json' },
           });
           const analysisData = await analysisResponse.json();
@@ -31,6 +35,12 @@ export default function Page({ params }: { params: { roomId: string } }) {
           } else {
             console.error('Unexpected feedback report format.');
           }
+        }
+        else{
+          console.log('no log file found for the recorded room')
+          setFeedbackData([]
+
+          )
         }
       } catch (error) {
         console.error('Error fetching room data:', error);
@@ -82,7 +92,7 @@ export default function Page({ params }: { params: { roomId: string } }) {
             ))}
           </div>
         ) : (
-          <p>Loading feedback data...</p>
+          <p>Loading feedback data... or feedback data not found please check logs</p>
         )}
       </div>
     </div>
